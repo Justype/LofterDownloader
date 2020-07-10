@@ -155,7 +155,7 @@ namespace LofterDownloader.Tools
                     {
                         HtmlDocument doc = new HtmlDocument();
                         doc.LoadHtml(Regex.Unescape(blogMatch.Groups[3].Value));
-                        content = doc.DocumentNode.InnerText;
+                        content = doc.DocumentNode.InnerText.Replace("&nbsp;", " ");
                         var aNodes = doc.DocumentNode.SelectNodes("//a");
                         if (aNodes != null)
                         {

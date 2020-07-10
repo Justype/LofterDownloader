@@ -316,9 +316,9 @@ namespace LofterDownloader.ViewModels
             });
 
             StartDownloadFiles();
-            PromptText = Tags + "：下载结束," + FailToDownloadFiles.Count + "下载失败";
             foreach (DownloadFile file in FailToDownloadFiles)
                 DownloadingFiles.Add(file);
+            PromptText = Tags + "：下载结束," + FailToDownloadFiles.Count + "下载失败";
             IsBusy = false;
         }
         /// <summary>
@@ -354,6 +354,7 @@ namespace LofterDownloader.ViewModels
                         Debug.WriteLine("下载错误\n" + e);
                         IOTools.DeleteFile(file.FilePath);
                         DownloadingFiles.Remove(file);
+                        FailToDownloadFiles.Add(file);
                     }
                 }
             });
