@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="clr-namespace:LofterDownloader.ValueConverters"
+             mc:Ignorable="d"
+             Title="下载"
+             x:Class="LofterDownloader.Views.InputPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:NotBoolConverter x:Key="NotBoolConverter"/>
+            <Style TargetType="Label">
+                <!--<Setter Property="FontSize" Value="{StaticResource NormalFontSize}"/>-->
+                <!--<Setter Property="HorizontalTextAlignment" Value="End"/>-->
+                <Setter Property="VerticalOptions" Value="Center"/>
+            </Style>
+            <Style TargetType="Label" x:Key="PromptLabel">
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="HorizontalTextAlignment" Value="End"/>
+            </Style>
+            <Style TargetType="Editor">
+                <Setter Property="Placeholder" Value="不同Tag用空格分隔"/>
+                <Setter Property="AutoSize" Value="TextChanges"/>
+            </Style>
+            <!--
+            <OnPlatform x:TypeArguments="x:Double" x:Key="NormalFontSize">
+                <On Platform="WPF">20</On>
+                <On Platform="Android">20</On>
+                <On Platform="Default">20</On>
+            </OnPlatform>
+
+            <Style TargetType="Entry">
+                <Setter Property="FontSize" Value="{StaticResource NormalFontSize}"/>
+                <Setter Property="VerticalTextAlignment" Value="Center"/>
+            </Style>
+            -->
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid Padding="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.ColumnSpan="2"
+                  IsVisible="{Binding IsBusy, Converter={StaticResource NotBoolConverter}}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Text="Tags" Style="{StaticResource PromptLabel}"/>
+                <Editor Text="{Binding Tags}" Grid.Column="1"/>
+
+                <Label Text="最低热度" Style="{StaticResource PromptLabel}" Grid.Row="1" Grid.Column="0"/>
+                <Entry Text="{Binding MinHot}" Grid.Row="1" Grid.Column="1"/>
+
+                <Label Text="时间" Style="{StaticResource PromptLabel}" Grid.Row="2"/>
+                <StackLayout Orientation="Horizontal" Grid.Row="2" Grid.Column="1">
+                    <DatePicker Date="{Binding StartDate}"/>
+                    <Label Text="=>"/>
+                    <DatePicker Date="{Binding EndDate}"/>
+                </StackLayout>
+
+                <Label Text="不要的Tag" Style="{StaticResource PromptLabel}" Grid.Row="3"/>
+                <Editor Text="{Binding IgnoreTags}" Grid.Row="3" Grid.Column="1"/>
+
+                <Label Text="最小字数" Style="{StaticResource PromptLabel}" Grid.Row="4"/>
+                <Entry Text="{Binding MinBlogLength}" Grid.Row="4" Grid.Column="1"/>
+
+                <Grid Grid.Row="5" Grid.ColumnSpan="2">
+                    <Grid.RowDefinitions >
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <CheckBox IsChecked="{Binding IsDownloadBlogImg}" Grid.Row="0" Grid.Column="0"/>
+                    <Label Grid.Row="0" Grid.Column="1" Text="下载博客图片"/>
+                    <CheckBox IsChecked="{Binding IsDownloadLinkImg}" Grid.Row="0" Grid.Column="2"/>
+                    <Label Grid.Row="0" Grid.Column="3" Text="下载外链图片"/>
+                    <CheckBox IsChecked="{Binding IsDownloadBlogContent}" Grid.Row="1" Grid.Column="0"/>
+                    <Label Grid.Row="1" Grid.Column="1" Text="下载博客"/>
+                    <CheckBox IsChecked="{Binding IsDownloadBlogWhileItHasImg}" Grid.Row="1" Grid.Column="2"/>
+                    <Label Grid.Row="1" Grid.Column="3" Text="下载有图片的博客"/>
+                    <CheckBox IsChecked="{Binding IsDownloadLongBlogImg}" Grid.Row="2" Grid.Column="0"/>
+                    <Label Grid.Row="2" Grid.Column="1" Text="下载长博客的图片"/>
+                    <CheckBox IsChecked="{Binding IsSortByAuthor}" Grid.Row="2" Grid.Column="2"/>
+                    <Label Grid.Row="2" Grid.Column="3" Text="按作者分类"/>
+                </Grid>
+            </Grid>
+            
+            <Button Text="打开目录" Grid.Row="1" Command="{Binding OpenFolderCommand}"/>
+            <Label Text="{Binding DownloadPath}" Grid.Row="1" Grid.Column="1"/>
+            <Button Text="下载" IsEnabled="{Binding IsBusy, Converter={StaticResource NotBoolConverter}}"
+                    Command="{Binding StartDownloadCommand}" Grid.Row="2"/>
+            <Label Text="{Binding PromptText}" Grid.Row="2" Grid.Column="1"/>
+
+            <ListView Grid.Row="3" Grid.ColumnSpan="2"
+                      ItemsSource="{Binding DownloadingFiles}"
+                      HasUnevenRows="True"
+                      SelectionMode="None">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Label Text="{Binding FileName}"/>
+                                <Entry Text="{Binding Url, Mode=OneTime}" Grid.Row="1"/>
+                                <ProgressBar Progress="{Binding Progress}" Grid.Row="2"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
