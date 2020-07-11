@@ -39,14 +39,15 @@ namespace LofterDownloader
                 if (folderPath != "")
                     folderPath = Path.Combine(folderPath, "乐乎下载");
                 Properties.Add("MainPath", folderPath);
-                CheckSetting("IsDownloadBlogImg", true);
-                CheckSetting("IsDownloadLinkImg", true);
-                CheckSetting("IsDownloadBlogContent", true);
-                CheckSetting("IsDownloadBlogWhileItHasImg", true);
-                CheckSetting("IsSortByAuthor", true);
-                CheckSetting("MaxDegreeOfParallelism", 4);
-                CheckSetting("IsDownloadLongBlogImg", true);
             }
+            CheckSetting("IsDownloadBlogImg", true);
+            CheckSetting("IsDownloadLinkImg", true);
+            CheckSetting("IsDownloadBlogContent", true);
+            CheckSetting("IsDownloadBlogWhileItHasImg", true);
+            CheckSetting("IsSortByAuthor", true);
+            CheckSetting("MaxDegreeOfParallelism", 4);
+            CheckSetting("IsDownloadLongBlogImg", true);
+            CheckSetting("LongBlogLength", 200);
         }
         private void CheckSetting(string key, object defaultValue)
         {

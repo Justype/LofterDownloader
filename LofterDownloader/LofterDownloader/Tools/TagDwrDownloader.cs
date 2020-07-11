@@ -75,7 +75,7 @@ namespace LofterDownloader.Tools
         /// <summary>
         /// 错误博客图片Url的正则
         /// </summary>
-        static readonly Regex WrongUrlRegex = new Regex("//nos.netease.com/(imglf[0-9])/");
+        static readonly Regex WrongUrlRegex = new Regex("//nos.netease.com/(imglf[0-9]?)/");
         #endregion
 
         public TagDwrDownloader()

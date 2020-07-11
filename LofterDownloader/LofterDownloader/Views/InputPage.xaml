@@ -23,6 +23,9 @@
                 <Setter Property="Placeholder" Value="不同Tag用空格分隔"/>
                 <Setter Property="AutoSize" Value="TextChanges"/>
             </Style>
+            <Style TargetType="Entry">
+                <Setter Property="Keyboard" Value="Numeric"/>
+            </Style>
             <!--
             <OnPlatform x:TypeArguments="x:Double" x:Key="NormalFontSize">
                 <On Platform="WPF">20</On>
@@ -87,6 +90,7 @@
                     <Grid.RowDefinitions >
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
@@ -106,9 +110,12 @@
                     <Label Grid.Row="2" Grid.Column="1" Text="下载长博客的图片"/>
                     <CheckBox IsChecked="{Binding IsSortByAuthor}" Grid.Row="2" Grid.Column="2"/>
                     <Label Grid.Row="2" Grid.Column="3" Text="按作者分类"/>
+                    <Entry Grid.Row="3" Grid.ColumnSpan="4"
+                           IsVisible="{Binding IsDownloadLongBlogImg, Converter={StaticResource NotBoolConverter}}"
+                           Text="{Binding LongBlogLength}"/>
                 </Grid>
             </Grid>
-            
+
             <Button Text="打开目录" Grid.Row="1" Command="{Binding OpenFolderCommand}"/>
             <Label Text="{Binding DownloadPath}" Grid.Row="1" Grid.Column="1"/>
             <Button Text="下载" IsEnabled="{Binding IsBusy, Converter={StaticResource NotBoolConverter}}"

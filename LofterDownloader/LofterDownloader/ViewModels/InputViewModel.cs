@@ -94,6 +94,17 @@ namespace LofterDownloader.ViewModels
             {
                 isDownloadLongBlogImg = value;
                 App.Current.Properties["IsDownloadLongBlogImg"] = value;
+                OnPropertyChanged();
+            }
+        }
+        int longBlogLength;
+        public int LongBlogLength
+        {
+            get => longBlogLength;
+            set
+            {
+                longBlogLength = value;
+                App.Current.Properties["LongBlogLength"] = value;
             }
         }
         bool isSortByAuthor;
@@ -145,6 +156,7 @@ namespace LofterDownloader.ViewModels
             isDownloadBlogWhileItHasImg = (bool)App.Current.Properties["IsDownloadBlogWhileItHasImg"];
             isSortByAuthor = (bool)App.Current.Properties["IsSortByAuthor"];
             isDownloadLongBlogImg = (bool)App.Current.Properties["IsDownloadLongBlogImg"];
+            longBlogLength = (int)App.Current.Properties["LongBlogLength"];
             #endregion
 
             #region DWR下载配置
@@ -265,7 +277,7 @@ namespace LofterDownloader.ViewModels
                     File.WriteAllText(filePath, blog.FullTxt);
                 }
                 #endregion
-                if (!IsDownloadLongBlogImg && blog.Content.Length > MinBlogLength)
+                if (!IsDownloadLongBlogImg && blog.Content.Length > LongBlogLength)
                     return;
                 #region 将博客图片加入下载队列
                 if (IsDownloadBlogImg && blog.PhotoLinks.Count != 0)
@@ -301,6 +313,8 @@ namespace LofterDownloader.ViewModels
                             herfName = "外链图片" + counter;
                             counter++;
                         }
+                        else
+                            herfName = IOTools.ValidateFileName(herfName);
                         string photoPath = savePath + " " + herfName + "." + match.Groups[1].Value;
                         if (File.Exists(photoPath))
                             continue;
