@@ -18,7 +18,7 @@
                 <ColumnDefinition/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <Button Grid.ColumnSpan="2">
+            <Button Grid.ColumnSpan="2" Command="{Binding ChangeMainPathCommand}">
                 <Button.IsEnabled>
                     <OnPlatform x:TypeArguments="x:Boolean">
                         <On Platform="WPF" Value="True"/>
@@ -32,7 +32,7 @@
                     </OnPlatform>
                 </Button.Text>
             </Button>
-            <Label Text="{Binding MainPath}" Grid.Row="1" Grid.ColumnSpan="2"/>
+            <Label Text="{Binding MainPath, StringFormat='地址：{0}'}" Grid.Row="1" Grid.ColumnSpan="2"/>
             <Label Text="{Binding MaxDegreeOfParallelism, StringFormat='下载线程数{0}'}"
                    Grid.Row="2"/>
             <Stepper Value="{Binding MaxDegreeOfParallelism}" Minimum="1" Maximum="16"

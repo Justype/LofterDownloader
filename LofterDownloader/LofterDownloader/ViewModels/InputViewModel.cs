@@ -186,7 +186,9 @@ namespace LofterDownloader.ViewModels
             #region Commands
             OpenFolderCommand = new Command(() =>
             {
-                DependencyService.Get<IOpenFolderService>().OpenFolder(mainPath);
+                // 尝试打开具体的目录，如果失败，选择主目录
+                if (!DependencyService.Get<IOpenFolderService>().OpenFolder(DownloadPath))
+                    DependencyService.Get<IOpenFolderService>().OpenFolder(mainPath);
             });
 
             StartDownloadCommand = new Command(async () =>

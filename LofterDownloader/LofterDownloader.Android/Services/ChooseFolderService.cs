@@ -10,7 +10,9 @@ namespace LofterDownloader.Droid.Services
     {
         public string GetFolder()
         {
-            return Environment.GetExternalStoragePublicDirectory(Environment.DirectoryDownloads).AbsolutePath;
+            string path = Environment.GetExternalStoragePublicDirectory(Environment.DirectoryDownloads).AbsolutePath;
+            path = System.IO.Path.Combine(path, "乐乎下载");
+            return path;
         }
     }
 }

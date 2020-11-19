@@ -31,10 +31,12 @@ namespace LofterDownloader.ViewModels
         {
             ChangeMainPathCommand = new Command(() =>
             {
+                //System.Diagnostics.Debug.WriteLine("=====GetFolder=====Start=====");
                 string folderPath = DependencyService.Get<IChooseFolderService>().GetFolder();
                 if (folderPath == "")
                     return;
-                Application.Current.Properties["MainPath"] = Path.Combine(folderPath, "乐乎下载");
+
+                Application.Current.Properties["MainPath"] = folderPath;
                 OnSettingChanged("MainPath");
             });
             OpenRepositoryCommand = new Command(() =>

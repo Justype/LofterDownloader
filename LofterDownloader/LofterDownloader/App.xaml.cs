@@ -33,11 +33,9 @@ namespace LofterDownloader
         private void CheckSettings()
         {
             // 如果不包含一定没运行
-            if (!Properties.ContainsKey("MainPath"))
+            if (!Properties.ContainsKey("MainPath") || (string)Properties["MainPath"] == string.Empty)
             {
                 string folderPath = DependencyService.Get<IChooseFolderService>().GetFolder();
-                if (folderPath != "")
-                    folderPath = Path.Combine(folderPath, "乐乎下载");
                 Properties.Add("MainPath", folderPath);
             }
             CheckSetting("IsDownloadBlogImg", true);
